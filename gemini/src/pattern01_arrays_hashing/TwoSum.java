@@ -28,27 +28,18 @@ public class TwoSum {
      * @return מערך בגודל 2 עם האינדקסים שמצאנו
      */
     public static int[] twoSum(int[] nums, int target) {
-        // TODO: תממש כאן את האלגוריתם באמצעות HashMap (כמו בתיאור למעלה)
-        // תכנון:
-        // 1. ניצור HashMap<Integer, Integer> שישמור: מספר -> אינדקס
-        // 2. נרוץ על המערך, ובכל איטרציה:
-        //    - נחפש האם ה-complement (כלומר target - num) קיים במפה
-        //    - אם כן, נחזיר [האינדקס של המשלים, האינדקס הנוכחי]
-        //    - אחרת, נכניס את num והאינדקס שלו למפה
-        
-        // דוגמה לקוד:
-        // Map<Integer, Integer> map = new HashMap<>();
-        // for (int i = 0; i < nums.length; i++) {
-        //     int complement = target - nums[i];
-        //     if (map.containsKey(complement)) {
-        //         return new int[] { map.get(complement), i };
-        //     }
-        //     map.put(nums[i], i);
-        // }
-        // return null; // אם לא מוצאים, נחזיר null (אבל לפי ההנחה תמיד יש פתרון)
-
-        // כתוב כאן את הפתרון
-        return null; // TODO: remove this line אחרי שתפתור
+        // הפתרון היעיל ביותר: מעבר בודד עם HashMap לזיהוי המשלים
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                // נמצא זוג מתאים
+                return new int[] { map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        // לפי ההנחה, תמיד יש פתרון
+        return null;
     }
     
     public static void main(String[] args) {
