@@ -3,6 +3,20 @@ package pattern01_arrays_hashing;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+    📝 מה השאלה?  
+    בדוק האם שתי מחרוזות הן אנגרמה (anagram) זו של זו.  
+    כלומר – האם ניתן לסדר מחדש את האותיות במחרוזת הראשונה ולקבל את השנייה.  
+    (אותן אותיות, אותו מספר מופעים לכל תו)
+*/
+
+/*
+    💡 הסבר לפתרון:  
+    נבנה טבלת ספירה (HashMap) לספירת מופעים של כל תו במחרוזת הראשונה,  
+    ואז נעבור על השנייה ונפחית את הספירה.  
+    בסוף, אם לכל התווים הספירה היא אפס – המחרוזות הן אנגרמה.
+*/
+
 public class ValidAnagram {
 
     public static void main(String[] args) {
@@ -14,23 +28,38 @@ public class ValidAnagram {
         System.out.println("Test 2 (Expected: false): " + isAnagram(s2, t2));
     }
 
+    /**
+     * פונקציה שבודקת האם שתי מחרוזות הן אנגרמות אחת של השנייה
+     * @param s מחרוזת מקורית
+     * @param t מחרוזת להשוואה
+     * @return true אם הן אנגרמות, אחרת false
+     */
     public static boolean isAnagram(String s, String t) {
-        // --- כאן תכתוב את הפתרון שלך ---
+        // אם האורכים לא שווים – אי אפשר שיהיו אנגרמה
         if (s.length() != t.length()) {
             return false;            
         }
+
+        // יצירת HashMap לספירת מופעים של כל תו במחרוזת הראשונה
         Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
+            // העלאת הספירה של התו הנוכחי ב-1 (אם לא קיים, נקבל 0)
             map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
         }
+
+        // מעבר על התווים במחרוזת השנייה והפחתת הספירה ב-1 לכל תו
         for (int i = 0; i < t.length(); i++) {
             map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0) - 1);
         }
+
+        // בדיקה האם כל התווים בסוף שווים ל-0
         for (int value : map.values()) {
             if (value != 0) {
+                // אם מצאנו תו עם ספירה שונה מ-0 – אלו לא אנגרמות
                 return false;
             }
         }
+        // כל התווים הופיעו אותו מספר פעמים – אלו אנגרמות
         return true;
     }
 }
